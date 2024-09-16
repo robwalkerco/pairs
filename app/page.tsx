@@ -1,45 +1,46 @@
 import Button from "@/components/Button";
-import PollMaker from "@/components/PollMaker";
-import Balloon from "@/components/Balloon";
-import { Poll } from "@/app/types";
+import GameMaker from "@/components/GameMaker";
+import { Game } from "@/app/types";
 import { redirect } from "next/navigation";
 import { PARTYKIT_URL } from "./env";
-import Input from "@/components/Input";
+import { splitEmoji } from "@/utils/splitEmoji";
 
 const randomId = () => Math.random().toString(36).substring(2, 10);
+
+const GAME_ID = "123";
 
 export default function Home() {
   async function createPoll(formData: FormData) {
     "use server";
+    const emoji = splitEmoji(
+      formData.get("emoji")?.toString().trim() ?? ""
+    ).filter(Boolean) || ["🍏", "🍎"];
 
-    const title = formData.get("title")?.toString() ?? "Anonymous poll";
-    const options: string[] = [];
-
-    for (const [key, value] of formData.entries()) {
-      if (key.startsWith("option-") && value.toString().trim().length > 0) {
-        options.push(value.toString());
-      }
-    }
-
-    const id = randomId();
-    const poll: Poll = {
-      title,
-      options,
+    const game: Game = {
+      emoji,
+      isStarted: false,
+      isEnded: false,
+      players: {},
+      matches: {},
+      completions: {},
     };
 
-    // 🎈 TODO: send a POST request to a PartyKit room
+    await fetch(`${PARTYKIT_URL}/party/${GAME_ID}`, {
+      method: "POST",
+      body: JSON.stringify(game),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-    redirect(`/${id}`);
+    redirect(`/${GAME_ID}/manage`);
   }
 
   return (
-    <>
-      <form action={createPoll}>
-        <div className="flex flex-col space-y-6">
-          <PollMaker />
-        </div>
-      </form>
-      <Balloon />
-    </>
+    <form action={createPoll}>
+      <div className="flex flex-col space-y-6">
+        <GameMaker />
+      </div>
+    </form>
   );
 }
