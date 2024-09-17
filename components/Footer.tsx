@@ -14,7 +14,7 @@ export default function Footer() {
       <div>
         <a
           className="underline"
-          href="https://docs.partykit.io"
+          href="https://github.com/robwalkerco/pairs"
           target="_blank"
         >
           View code in GitHub
