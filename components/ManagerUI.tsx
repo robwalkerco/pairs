@@ -51,7 +51,7 @@ export default function ManagerUI({ id, game }: { id: string; game: Game }) {
 
                 if (
                   typeof aTime !== undefined &&
-                  (typeof bTime === undefined || aTime < bTime)
+                  (typeof bTime === undefined || aTime > bTime)
                 ) {
                   return -1;
                 }
