@@ -1,11 +1,13 @@
-# PartyPoll tutorial
+# PartyKit and Next.js Pairs game
 
-This is a starter kit for the tutorial on [adding PartyKit to a Next.js app](https://docs.partykit.io/tutorials/add-partykit-to-a-nextjs-app/).
+Play the game with some friends, or by yourself, at https://pairs-nine.vercel.app
 
-What now? You can:
+This is a real-time and multi-player version of snap, using Emojis or single characters for the game cards.
 
-- follow [step-by-step tutorial on PartyKit Docs](https://docs.partykit.io/tutorials/add-partykit-to-a-nextjs-app/),
-- explore the code of [the finished app](https://github.com/partykit/partypoll),
-- play with the [live Next.js app on Vercel](https://partypoll.vercel.app/),
-- watch Sylwia Vargas' talk connected to this tutorial from the [2023 Next.js Conf](https://youtu.be/SVD372XDFQQ?feature=shared),
-- join us on our [Discord server](https://discord.gg/KDZb7J4uxJ) or [Twitter](https://twitter.com/partykit_io) 🥰
+The number of cards and their emojis can be configured for each game.
+
+Players can join the game by scanong a QR code and entering their name.
+
+The game manager can start the game when all players have joined.
+
+The game managers screen shows the live leaderboard.
