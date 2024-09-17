@@ -41,7 +41,8 @@ export default function GameUI({
     } else if (selectionOne && selectionTwo) {
       setTimeout(reset, 1000);
     }
-  }, [selectionOne, selectionTwo]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [match, selectionOne, selectionTwo]);
 
   const handleSelection = (card: Card) => {
     if (!selectionOne) {
@@ -91,20 +92,16 @@ export default function GameUI({
             );
           }
 
-          return (
-            <div>
-              {selectionOne?.id === card.id ||
-              selectionTwo?.id === card.id ? null : (
-                <div
-                  key={index}
-                  className={`text-2xl border rounded-xl p-2 m-2 justify-center flex ${
-                    disabled ? "cursor-not-allowed" : "cursor-pointer"
-                  }`}
-                  onClick={disabled ? undefined : () => handleSelection(card)}
-                >
-                  ❓
-                </div>
-              )}
+          return selectionOne?.id === card.id ||
+            selectionTwo?.id === card.id ? null : (
+            <div
+              key={index}
+              className={`text-2xl border rounded-xl p-2 m-2 justify-center flex ${
+                disabled ? "cursor-not-allowed" : "cursor-pointer"
+              }`}
+              onClick={disabled ? undefined : () => handleSelection(card)}
+            >
+              ❓
             </div>
           );
         })}

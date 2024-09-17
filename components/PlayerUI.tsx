@@ -3,7 +3,7 @@
 import { PARTYKIT_HOST } from "@/app/env";
 import { Game } from "@/app/types";
 import usePartySocket from "partysocket/react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useStopwatch } from "react-timer-hook";
 import Input from "./Input";
 import Button from "./Button";
@@ -31,21 +31,35 @@ export default function PlayerUI({ id, game }: { id: string; game: Game }) {
     socket.send(JSON.stringify({ type: "name", name, id: socket.id }));
   };
 
-  const sendMatches = (emoji: string) => {
-    socket.send(JSON.stringify({ type: "matches", emoji, id: socket.id }));
-  };
+  const sendMatches = useCallback(
+    (emoji: string) => {
+      socket.send(JSON.stringify({ type: "matches", emoji, id: socket.id }));
+    },
+    [socket]
+  );
 
-  const sendCompletion = (time: number) => {
-    socket.send(JSON.stringify({ type: "completion", time, id: socket.id }));
-  };
+  const sendCompletion = useCallback(
+    (time: number) => {
+      socket.send(JSON.stringify({ type: "completion", time, id: socket.id }));
+    },
+    [socket]
+  );
 
-  const match = (emoji: string, time: number) => {
-    sendMatches(emoji);
+  const match = useCallback(
+    (emoji: string, time: number) => {
+      sendMatches(emoji);
 
-    if (currentMatches.length + 1 === currentGame.emoji.length) {
-      sendCompletion(time);
-    }
-  };
+      if (currentMatches.length + 1 === currentGame.emoji.length) {
+        sendCompletion(time);
+      }
+    },
+    [
+      currentGame.emoji.length,
+      currentMatches.length,
+      sendCompletion,
+      sendMatches,
+    ]
+  );
 
   return (
     <div className="flex flex-col space-y-6">
