@@ -4,8 +4,10 @@ import { PARTYKIT_HOST } from "@/app/env";
 import { Game } from "@/app/types";
 import usePartySocket from "partysocket/react";
 import { useState } from "react";
+import { useStopwatch } from "react-timer-hook";
 import Input from "./Input";
 import Button from "./Button";
+import GameUI from "./GameUI";
 
 export default function PlayerUI({ id, game }: { id: string; game: Game }) {
   const [name, setName] = useState("");
@@ -37,11 +39,11 @@ export default function PlayerUI({ id, game }: { id: string; game: Game }) {
     socket.send(JSON.stringify({ type: "completion", time, id: socket.id }));
   };
 
-  const match = (emoji: string) => {
+  const match = (emoji: string, time: number) => {
     sendMatches(emoji);
 
     if (currentMatches.length + 1 === currentGame.emoji.length) {
-      sendCompletion(30);
+      sendCompletion(time);
     }
   };
 
@@ -81,20 +83,30 @@ export default function PlayerUI({ id, game }: { id: string; game: Game }) {
       ) : null}
 
       {currentGame.isStarted && !currentGame.isEnded && isRegistered ? (
-        <ul>
-          {currentGame.emoji.map((emoji, index) => (
-            <li key={index}>
-              {emoji}
-              {currentMatches.includes(emoji) ? null : (
-                <Button onClick={() => match(emoji)}>Match!</Button>
-              )}
-            </li>
-          ))}
-        </ul>
+        <GameUI
+          currentGame={currentGame}
+          currentMatches={currentMatches}
+          completionTime={currentGame.completions[socket.id]}
+          match={match}
+        />
       ) : null}
 
       {currentGame.isStarted && currentGame.isEnded && isRegistered ? (
-        <p className="font-bold">Ended</p>
+        <>
+          <h2 className="text-xl font-bold">Game over!</h2>
+          {currentMatches.length === currentGame.emoji.length ? (
+            <h3 className="text-2xl font-bold">
+              You completed all the pairs in{" "}
+              {currentGame.completions[socket.id]} seconds!
+            </h3>
+          ) : (
+            <h3 className="text-2xl font-bold">
+              You matched {currentMatches.length} of the{" "}
+              {currentGame.emoji.length} pairs in{" "}
+              {currentGame.completions[socket.id] ?? 0} seconds!
+            </h3>
+          )}
+        </>
       ) : null}
 
       {currentGame.isStarted && !isRegistered ? (
