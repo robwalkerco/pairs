@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -22,6 +23,9 @@ export default function RootLayout({
               {children}
             </div>
           </main>
+          <div className="absolute w-full bottom-10 flex flex-col items-center">
+            <Footer />
+          </div>
         </div>
       </body>
     </html>
