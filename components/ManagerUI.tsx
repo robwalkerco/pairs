@@ -10,6 +10,8 @@ import Button from "./Button";
 export default function ManagerUI({ id, game }: { id: string; game: Game }) {
   const [currentGame, setCurrentGame] = useState(game);
 
+  const playUrl = `${new URL(window.location.href).origin}/${id}/play`;
+
   const socket = usePartySocket({
     host: PARTYKIT_HOST,
     room: id,
@@ -99,11 +101,8 @@ export default function ManagerUI({ id, game }: { id: string; game: Game }) {
       </div>
 
       {!currentGame.isStarted ? (
-        <a href={`${new URL(window.location.href)}/${id}/play`} target="_blank">
-          <QRCode
-            className="flex flex-col"
-            value={`${new URL(window.location.href)}/${id}/play`}
-          />
+        <a href={playUrl} target="_blank">
+          <QRCode className="flex flex-col" value={playUrl} />
           <p className="text-2xl font-bold mt-4">👆 Scan to join game 👆</p>
         </a>
       ) : null}
