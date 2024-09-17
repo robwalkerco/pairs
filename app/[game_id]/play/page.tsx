@@ -3,7 +3,7 @@ import { PARTYKIT_URL } from "@/app/env";
 import type { Game } from "@/app/types";
 import PlayerUI from "@/components/PlayerUI";
 
-export default async function PollPage({
+export default async function PlayPage({
   params,
 }: {
   params: { game_id: string };
