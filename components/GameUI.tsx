@@ -3,8 +3,9 @@
 import { useStopwatch } from "react-timer-hook";
 import { Game } from "@/app/types";
 import { useEffect, useState } from "react";
+import { randomId } from "@/utils/randomId";
 
-type Card = { emoji: string; id: number };
+type Card = { emoji: string; id: string };
 
 export default function GameUI({
   currentGame,
@@ -21,7 +22,7 @@ export default function GameUI({
   const [cards] = useState<Card[]>(
     [...currentGame.emoji, ...currentGame.emoji]
       .sort(() => Math.random() - 0.5)
-      .map((emoji) => ({ emoji, id: Math.random() }))
+      .map((emoji) => ({ emoji, id: randomId() }))
   );
   const [selectionOne, setSelectionOne] = useState<Card | null>(null);
   const [selectionTwo, setSelectionTwo] = useState<Card | null>(null);

@@ -55,7 +55,7 @@ export default function PlayerUI({ id, game }: { id: string; game: Game }) {
         <>
           {isRegistered ? (
             <h2 className="text-xl font-bold">
-              Hold tight, {registeredName}.The game will start soon!
+              Hold tight, {registeredName}. The game will start soon!
             </h2>
           ) : (
             <>
@@ -102,8 +102,7 @@ export default function PlayerUI({ id, game }: { id: string; game: Game }) {
           ) : (
             <h3 className="text-2xl font-bold">
               You matched {currentMatches.length} of the{" "}
-              {currentGame.emoji.length} pairs in{" "}
-              {currentGame.completions[socket.id] ?? 0} seconds!
+              {currentGame.emoji.length} pairs.
             </h3>
           )}
         </>

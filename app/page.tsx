@@ -1,17 +1,15 @@
-import Button from "@/components/Button";
 import GameMaker from "@/components/GameMaker";
 import { Game } from "@/app/types";
 import { redirect } from "next/navigation";
 import { PARTYKIT_URL } from "./env";
 import { splitEmoji } from "@/utils/splitEmoji";
-
-const randomId = () => Math.random().toString(36).substring(2, 10);
-
-const GAME_ID = "123";
+import { randomId } from "@/utils/randomId";
 
 export default function Home() {
   async function createPoll(formData: FormData) {
     "use server";
+    const id = randomId();
+
     const emoji = splitEmoji(
       formData.get("emoji")?.toString().trim() ?? ""
     ).filter(Boolean) || ["🍏", "🍎"];
@@ -25,7 +23,7 @@ export default function Home() {
       completions: {},
     };
 
-    await fetch(`${PARTYKIT_URL}/party/${GAME_ID}`, {
+    await fetch(`${PARTYKIT_URL}/party/${id}`, {
       method: "POST",
       body: JSON.stringify(game),
       headers: {
@@ -33,7 +31,7 @@ export default function Home() {
       },
     });
 
-    redirect(`/${GAME_ID}/manage`);
+    redirect(`/${id}/manage`);
   }
 
   return (

@@ -99,10 +99,13 @@ export default function ManagerUI({ id, game }: { id: string; game: Game }) {
       </div>
 
       {!currentGame.isStarted ? (
-        <QRCode
-          className="flex flex-col"
-          value={`${new URL(window.location.href).host}/${id}/play`}
-        />
+        <div>
+          <QRCode
+            className="flex flex-col"
+            value={`${new URL(window.location.href).host}/${id}/play`}
+          />
+          <p className="text-2xl font-bold mt-4">👆 Scan to join game 👆</p>
+        </div>
       ) : null}
     </div>
   );
