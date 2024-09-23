@@ -49,11 +49,12 @@ export default function ManagerUI({ id, game }: { id: string; game: Game }) {
                 const bTime = currentGame.completions[b];
                 const bCount = (currentGame.matches[b] ?? []).length;
 
-                if (
-                  typeof aTime !== undefined &&
-                  (typeof bTime === undefined || aTime > bTime)
-                ) {
+                if (aTime === undefined && bTime !== undefined) {
+                  return 1;
+                } else if (aTime !== undefined && bTime === undefined) {
                   return -1;
+                } else if (aTime !== undefined && bTime !== undefined) {
+                  return aTime - bTime;
                 }
 
                 return bCount - aCount;
