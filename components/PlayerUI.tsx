@@ -61,6 +61,8 @@ export default function PlayerUI({ id, game }: { id: string; game: Game }) {
     ]
   );
 
+  const playersCount = Object.keys(currentGame.players).length;
+
   return (
     <div className="flex flex-col space-y-6">
       <h1 className="text-2xl font-bold">Match {currentGame.emoji.join("")}</h1>
@@ -91,8 +93,7 @@ export default function PlayerUI({ id, game }: { id: string; game: Game }) {
 
       {!currentGame.isStarted ? (
         <p className="font-bold">
-          There are {Object.keys(currentGame.players).length} players in the
-          game.
+          There are {playersCount} players in the game.
         </p>
       ) : null}
 

@@ -25,6 +25,8 @@ export default function ManagerUI({ id, game }: { id: string; game: Game }) {
     socket.send(JSON.stringify({ type }));
   };
 
+  const playersCount = Object.keys(currentGame.players).length;
+
   return (
     <div className="flex justify-between">
       <div className="flex flex-col ">
@@ -36,9 +38,7 @@ export default function ManagerUI({ id, game }: { id: string; game: Game }) {
           <h2 className="text-1xl font-bold">Game Over</h2>
         ) : null}
 
-        <h2 className="text-1xl font-bold">
-          {Object.keys(currentGame.players).length} Players
-        </h2>
+        <h2 className="text-1xl font-bold">{playersCount} Players</h2>
 
         <div className="space-y-4">
           <ul className="space-y-1">
