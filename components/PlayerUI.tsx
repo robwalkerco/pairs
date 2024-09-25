@@ -93,7 +93,9 @@ export default function PlayerUI({ id, game }: { id: string; game: Game }) {
 
       {!currentGame.isStarted ? (
         <p className="font-bold">
-          There are {playersCount} players in the game.
+          {playersCount === 1
+            ? `There is 1 player in the game.`
+            : `There are ${playersCount} players in the game.`}
         </p>
       ) : null}
 

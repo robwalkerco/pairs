@@ -38,7 +38,9 @@ export default function ManagerUI({ id, game }: { id: string; game: Game }) {
           <h2 className="text-1xl font-bold">Game Over</h2>
         ) : null}
 
-        <h2 className="text-1xl font-bold">{playersCount} Players</h2>
+        <h2 className="text-1xl font-bold">
+          {playersCount === 1 ? "1 Player" : `${playersCount} Players`}
+        </h2>
 
         <div className="space-y-4">
           <ul className="space-y-1">
